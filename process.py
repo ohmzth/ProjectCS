@@ -13,10 +13,8 @@ wName = "Live"
 resolution = (1920, 1080)
 
 fps = 60.0 
-#qweqweqweqweqeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeesss
 # Create an Empty window
 cv2.namedWindow("Live", cv2.WINDOW_NORMAL)
-
 # Resize this window
 #cv2.resizeWindow("Live", 2000, 800)
 img = pg.screenshot()
