@@ -8,12 +8,13 @@ sys.setrecursionlimit(10 ** 9)
 
 #kkkkkkk
 
-# Initialize the  drag object
+# Initialize the  drag object# 
 wName = "Live"
 
 resolution = (1920, 1080)
 
-fps = 60.0
+fps = 60.0 
+#qweqweqweqweqeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeesss
 # Create an Empty window
 cv2.namedWindow("Live", cv2.WINDOW_NORMAL)
 
@@ -38,7 +39,7 @@ while True:
     if rectI.returnflag:
         break
 
-print("Dragged rectangle coordinates")
+#print("Dragged rectangle coordinates")
 print(str(rectI.outRect.x) + ',' + str(rectI.outRect.y) + ',' + \
       str(rectI.outRect.w) + ',' + str(rectI.outRect.h))
 
