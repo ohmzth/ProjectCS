@@ -119,6 +119,9 @@ class detection:
             img = pg.screenshot(region=(rectI.outRect.x,rectI.outRect.y,rectI.outRect.w,rectI.outRect.h));
             frame = np.array(img)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+            results = self.score_frame(frame)
+            frame = self.plot_boxes(results, frame)
             #out.write(frame)
             cv2.imshow('LiveCap', frame)
             if cv2.waitKey(1) == ord('q'):
