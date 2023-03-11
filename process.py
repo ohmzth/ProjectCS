@@ -10,6 +10,12 @@ import selectinwindow
 import sys
 from time import time
 sys.setrecursionlimit(10 ** 9)
+# UI
+from tkinter import *
+from PIL import ImageTk, Image
+import tkinter as tk
+
+
 
 class detection:
     def __init__(self,capture_index,model_name):
@@ -75,8 +81,10 @@ class detection:
                 cv2.rectangle(frame, (x1, y1), (x2, y2), bgr, 2)
                 cv2.putText(frame, self.class_to_label(labels[i]), (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr, 2)
         return frame
+   
 
     def __call__(self):
+        
         # Initialize the  drag object# 
         wName = "Live"
 
@@ -127,7 +135,11 @@ class detection:
             if cv2.waitKey(1) == ord('q'):
                 break
 
+
+         
+
 detector = detection(capture_index=0,model_name='best.pt')
-detector()
+#detector()
+
 cv2.destroyAllWindows()
 
