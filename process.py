@@ -14,6 +14,11 @@ sys.setrecursionlimit(10 ** 9)
 from tkinter import *
 from PIL import ImageTk, Image
 import tkinter as tk
+from torchvision import models
+
+
+#import models
+ 
 
 
 
@@ -37,7 +42,7 @@ class detection:
         Loads Yolo5 model from pytorch hub.
         :return: Trained Pytorch model.
         """
-        model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
+        model = torch.hub.load('ultralytics/yolov5', 'custom', path='bestNew.pt', force_reload=True) 
         return model
 
 
@@ -77,14 +82,15 @@ class detection:
             row = cord[i]
             if row[4] >= 0.2:
                 x1, y1, x2, y2 = int(row[0]*x_shape), int(row[1]*y_shape), int(row[2]*x_shape), int(row[3]*y_shape)
+                print(x1,y1,x2,y2)
                 bgr = (0, 255, 0)
                 cv2.rectangle(frame, (x1, y1), (x2, y2), bgr, 2)
-                cv2.putText(frame, self.class_to_label(labels[i]), (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr, 2)
+                
         return frame
    
 
     def __call__(self):
-        
+        i=0
         # Initialize the  drag object# 
         wName = "Live"
 
@@ -123,23 +129,23 @@ class detection:
 
         cv2.namedWindow("LiveCap")
         cv2.resizeWindow("LiveCap", rectI.outRect.w, rectI.outRect.h)
+        results = []
         while True:
             img = pg.screenshot(region=(rectI.outRect.x,rectI.outRect.y,rectI.outRect.w,rectI.outRect.h));
             frame = np.array(img)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            if(i%30 == 0):
+                results = self.score_frame(frame)
 
-            results = self.score_frame(frame)
             frame = self.plot_boxes(results, frame)
             #out.write(frame)
             cv2.imshow('LiveCap', frame)
+            i=i+1
             if cv2.waitKey(1) == ord('q'):
                 break
 
-
-         
-
-detector = detection(capture_index=0,model_name='best.pt')
-#detector()
+detector = detection(capture_index=0,model_name='D:/seneir/bestNew.pt')
+detector()
 
 cv2.destroyAllWindows()
 
