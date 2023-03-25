@@ -24,55 +24,28 @@ from torchvision import models
 
 class detection:
     def __init__(self,capture_index,model_name):
-        """
-        Initializes the class with youtube url and output file.
-        :param url: Has to be as youtube URL,on which prediction is made.
-        :param out_file: A valid output file name.
-        """
         self.capture_index= capture_index
         self.model = self.load_model(model_name)
         self.classes = self.model.names
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        print("\n\nDevice Used:",self.device)
+        
 
 
 
     def load_model(self,model_name):
-        """
-        Loads Yolo5 model from pytorch hub.
-        :return: Trained Pytorch model.
-        """
-        model = torch.hub.load('ultralytics/yolov5', 'custom', path='bestNew.pt', force_reload=True) 
+   
+        model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_name, force_reload=False) 
         return model
 
 
     def score_frame(self, frame):
-        """
-        Takes a single frame as input, and scores the frame using yolo5 model.
-        :param frame: input frame in numpy/list/tuple format.
-        :return: Labels and Coordinates of objects detected by model in the frame.
-        """
+       
         self.model.to(self.device)
         frame = [frame]
         results = self.model(frame)
      
         labels, cord = results.xyxyn[0][:, -1], results.xyxyn[0][:, :-1]
         return labels, cord
-
-
-    def class_to_label(self, x):
-        """
-        For a given label value, return corresponding string label.
-        :param x: numeric label
-        :return: corresponding string label
-        """
-        return self.classes[int(x)]
-
-
-
-
-    def class_to_label(self, x):
-        return self.classes[int(x)]
 
     def plot_boxes(self, results, frame):
         labels, cord = results
@@ -93,10 +66,7 @@ class detection:
         i=0
         # Initialize the  drag object# 
         wName = "Live"
-
         resolution = (1920, 1080)
-
-        fps = 60.0 
         # Create an Empty window
         cv2.namedWindow("Live", cv2.WINDOW_NORMAL)
         # Resize this window
@@ -126,7 +96,6 @@ class detection:
 
         # close all open windows
         cv2.destroyAllWindows()
-
         cv2.namedWindow("LiveCap")
         cv2.resizeWindow("LiveCap", rectI.outRect.w, rectI.outRect.h)
         results = []
@@ -138,6 +107,7 @@ class detection:
                 results = self.score_frame(frame)
 
             frame = self.plot_boxes(results, frame)
+
             #out.write(frame)
             cv2.imshow('LiveCap', frame)
             i=i+1

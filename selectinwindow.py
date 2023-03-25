@@ -21,8 +21,6 @@
 # SOFTWARE.
 
 import cv2
-
-
 class Rect:
     x = None
     y = None
@@ -31,8 +29,6 @@ class Rect:
 
     def printit(self):
         print(str(self.x) + ',' + str(self.y) + ',' + str(self.w) + ',' + str(self.h))
-
-
 class DragRectangle:
     # Limits on the canvas
     keepWithin = Rect()
@@ -47,16 +43,12 @@ class DragRectangle:
     sBlk = 4
     # Whether initialized or not
     initialized = False
-
     # Image
     image = None
-
     # Window Name
     wname = ""
-
     # Return flag
     returnflag = False
-
     # FLAGS
     # Rect already present
     active = False
@@ -72,27 +64,21 @@ class DragRectangle:
     BM = False
     BR = False
     hold = False
-
     def __init__(self, Img, windowName, windowWidth, windowHeight):
         # Image
         self.image = Img
-
         # Window name
         self.wname = windowName
-
         # Limit the selection box to the canvas
         self.keepWithin.x = 0
         self.keepWithin.y = 0
         self.keepWithin.w = windowWidth
         self.keepWithin.h = windowHeight
-
         # Set rect to zero width and height
         self.outRect.x = 0
         self.outRect.y = 0
         self.outRect.w = 0
         self.outRect.h = 0
-
-
 def dragrect(event, x, y, flags, dragObj):
     if x < dragObj.keepWithin.x:
         x = dragObj.keepWithin.x
@@ -111,7 +97,6 @@ def dragrect(event, x, y, flags, dragObj):
         mouseMove(x, y, dragObj)
     if event == cv2.EVENT_LBUTTONDBLCLK:
         mouseDoubleClick(x, y, dragObj)
-
 
 def pointInRect(pX, pY, rX, rY, rW, rH):
     if rX <= pX <= (rX + rW) and rY <= pY <= (rY + rH):
