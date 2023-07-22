@@ -140,7 +140,7 @@ def ShopDisplay(img,x1,y1):
     imgtk = ImageTk.PhotoImage(image=im)    
     #imgtk = imgtk.resize((220, 400), Image.LANCZOS)
     tkimage= ImageTk.PhotoImage(imgtk)
-
+    #q
     label=Label(w,image=tkimage)
     label.place(x=30+x1,y=120+y1)
 
