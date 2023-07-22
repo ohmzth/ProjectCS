@@ -18,11 +18,13 @@ from torchvision import models
 
 
 #import models
+
  
 
 
 
 class detection:
+    frame1=" "
     def __init__(self,capture_index,model_name):
         self.capture_index= capture_index
         self.model = self.load_model(model_name)
@@ -39,11 +41,9 @@ class detection:
 
 
     def score_frame(self, frame):
-       
         self.model.to(self.device)
         frame = [frame]
         results = self.model(frame)
-     
         labels, cord = results.xyxyn[0][:, -1], results.xyxyn[0][:, :-1]
         return labels, cord
 
@@ -100,7 +100,7 @@ class detection:
         cv2.resizeWindow("LiveCap", rectI.outRect.w, rectI.outRect.h)
         results = []
         while True:
-            img = pg.screenshot(region=(rectI.outRect.x,rectI.outRect.y,rectI.outRect.w,rectI.outRect.h));
+            img = pg.screenshot(region=(rectI.outRect.x,rectI.outRect.y,rectI.outRect.w,rectI.outRect.h))
             frame = np.array(img)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             if(i%30 == 0):
@@ -118,4 +118,3 @@ detector = detection(capture_index=0,model_name='D:/seneir/bestNew.pt')
 detector()
 
 cv2.destroyAllWindows()
-
